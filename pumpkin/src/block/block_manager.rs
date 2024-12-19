@@ -21,8 +21,7 @@ pub struct BlockManager {
 
 impl BlockManager {
     pub fn register<T: PumpkinBlock + BlockMetadata + 'static>(&mut self, block: T) {
-        self.blocks
-            .insert(block.name().to_string(), Arc::new(block));
+        self.blocks.insert(block.name(), Arc::new(block));
     }
 
     pub async fn on_use(
@@ -78,6 +77,19 @@ impl BlockManager {
         let pumpkin_block = self.get_pumpkin_block(block);
         if let Some(pumpkin_block) = pumpkin_block {
             pumpkin_block.on_broken(player, location, server).await;
+        }
+    }
+
+    pub async fn on_close(
+        &self,
+        block: &Block,
+        player: &Player,
+        location: WorldPosition,
+        server: &Server,
+    ) {
+        let pumpkin_block = self.get_pumpkin_block(block);
+        if let Some(pumpkin_block) = pumpkin_block {
+            pumpkin_block.on_close(player, location, server).await;
         }
     }
 

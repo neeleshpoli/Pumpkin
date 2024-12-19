@@ -1,3 +1,4 @@
+use std::num::NonZeroU8;
 use std::sync::Arc;
 
 use super::PlayerConfig;
@@ -435,28 +436,70 @@ impl Player {
         ) */
     }
 
-    pub async fn handle_client_information(&self, client_information: SClientInformationPlay) {
+    pub async fn handle_client_information(
+        self: &Arc<Self>,
+        client_information: SClientInformationPlay,
+    ) {
         if let (Some(main_hand), Some(chat_mode)) = (
             Hand::from_i32(client_information.main_hand.into()),
             ChatMode::from_i32(client_information.chat_mode.into()),
         ) {
-            let mut config = self.config.lock().await;
-            let update =
-                config.main_hand != main_hand || config.skin_parts != client_information.skin_parts;
+            if client_information.view_distance <= 0 {
+                self.kick(TextComponent::text(
+                    "Cannot have zero or negative view distance!",
+                ))
+                .await;
+                return;
+            }
 
-            *config = PlayerConfig {
-                locale: client_information.locale,
-                // A Negative view distance would be impossible and make no sense right ?, Mojang: Lets make is signed :D
-                view_distance: client_information.view_distance as u8,
-                chat_mode,
-                chat_colors: client_information.chat_colors,
-                skin_parts: client_information.skin_parts,
-                main_hand,
-                text_filtering: client_information.text_filtering,
-                server_listing: client_information.server_listing,
+            let (update_skin, update_watched) = {
+                let mut config = self.config.lock().await;
+                let update_skin = config.main_hand != main_hand
+                    || config.skin_parts != client_information.skin_parts;
+
+                let old_view_distance = config.view_distance;
+
+                let update_watched =
+                    if old_view_distance.get() == client_information.view_distance as u8 {
+                        false
+                    } else {
+                        log::debug!(
+                            "Player {} ({}) updated render distance: {} -> {}.",
+                            self.gameprofile.name,
+                            self.client.id,
+                            old_view_distance,
+                            client_information.view_distance
+                        );
+
+                        true
+                    };
+
+                *config = PlayerConfig {
+                    locale: client_information.locale,
+                    // A Negative view distance would be impossible and make no sense right ?, Mojang: Lets make is signed :D
+                    view_distance: unsafe {
+                        NonZeroU8::new_unchecked(client_information.view_distance as u8)
+                    },
+                    chat_mode,
+                    chat_colors: client_information.chat_colors,
+                    skin_parts: client_information.skin_parts,
+                    main_hand,
+                    text_filtering: client_information.text_filtering,
+                    server_listing: client_information.server_listing,
+                };
+                (update_skin, update_watched)
             };
-            drop(config);
-            if update {
+
+            if update_watched {
+                player_chunker::update_position(self).await;
+            }
+
+            if update_skin {
+                log::debug!(
+                    "Player {} ({}) updated their skin.",
+                    self.gameprofile.name,
+                    self.client.id,
+                );
                 self.update_client_information().await;
             }
         } else {
@@ -722,7 +765,7 @@ impl Player {
 
                     let block_bounding_box = BoundingBox::from_block(&world_pos);
                     let bounding_box = entity.bounding_box.load();
-                    //TODO: Make this check for every entity in that posistion
+                    //TODO: Make this check for every entity in that position
                     if !bounding_box.intersects(&block_bounding_box) {
                         world
                             .set_block_state(world_pos, block.default_state_id)
@@ -803,6 +846,16 @@ impl Player {
         if let Some(id) = open_container {
             let mut open_containers = server.open_containers.write().await;
             if let Some(container) = open_containers.get_mut(&id) {
+                // If container contains both a location and a type, run the on_close block_manager handler
+                if let Some(pos) = container.get_location() {
+                    if let Some(block) = container.get_block() {
+                        server
+                            .block_manager
+                            .on_close(&block, self, pos, server) //block, self, location, server)
+                            .await;
+                    }
+                }
+                // Remove the player from the container
                 container.remove_player(self.entity_id());
             }
             self.open_container.store(None);

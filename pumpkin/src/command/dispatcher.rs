@@ -32,11 +32,11 @@ impl CommandError {
     pub fn into_string_or_pumpkin_error(self, cmd: &str) -> Result<String, Box<dyn PumpkinError>> {
         match self {
             InvalidConsumption(s) => {
-                println!("Error while parsing command \"{cmd}\": {s:?} was consumed, but couldn't be parsed");
+                log::error!("Error while parsing command \"{cmd}\": {s:?} was consumed, but couldn't be parsed");
                 Ok("Internal Error (See logs for details)".into())
             }
             InvalidRequirement => {
-                println!("Error while parsing command \"{cmd}\": a requirement that was expected was not met.");
+                log::error!("Error while parsing command \"{cmd}\": a requirement that was expected was not met.");
                 Ok("Internal Error (See logs for details)".into())
             }
             GeneralCommandIssue(s) => Ok(s),
@@ -70,7 +70,7 @@ impl<'a> CommandDispatcher<'a> {
                 }
                 Err(pumpkin_error) => {
                     pumpkin_error.log();
-                    sender.send_message(TextComponent::text("Unknown internal error occured while running command. Please see server log").color(Color::Named(NamedColor::Red))).await;
+                    sender.send_message(TextComponent::text("Unknown internal error occurred while running command. Please see server log").color(Color::Named(NamedColor::Red))).await;
                 }
             }
         }
@@ -145,13 +145,13 @@ impl<'a> CommandDispatcher<'a> {
         let key = parts
             .next()
             .ok_or(GeneralCommandIssue("Empty Command".to_string()))?;
-        let mut raw_args: Vec<&str> = parts.rev().collect();
+        let raw_args: Vec<&str> = parts.rev().collect();
 
         let tree = self.get_tree(key)?;
 
         // try paths until fitting path is found
         for path in tree.iter_paths() {
-            if Self::try_is_fitting_path(src, server, &path, tree, &mut raw_args).await? {
+            if Self::try_is_fitting_path(src, server, &path, tree, &mut raw_args.clone()).await? {
                 return Ok(());
             }
         }
