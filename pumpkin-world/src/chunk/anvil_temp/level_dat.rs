@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use pumpkin_core::math::{vector2::Vector2, vector3::Vector3};
 use serde::Deserialize;
 use tokio::{fs::OpenOptions, io::AsyncReadExt};
@@ -48,12 +50,12 @@ struct WorldGenSettings {
 }
 
 impl LevelDat {
-    pub async fn read_level_dat(world_path: &String) -> Result<WorldInfo, WorldHandlingError> {
+    pub async fn read_level_dat(world_path: &PathBuf) -> Result<WorldInfo, WorldHandlingError> {
         // Load level.dat
         let mut level_info_file = OpenOptions::new()
             .read(true)
             .write(true)
-            .open(format!("{world_path}/level.dat"))
+            .open(world_path.join("level.dat"))
             .await?;
 
         // Read the entirity of level.dat

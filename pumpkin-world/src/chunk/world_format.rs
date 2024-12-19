@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use pumpkin_core::math::{vector2::Vector2, vector3::Vector3};
 use thiserror::Error;
 
@@ -7,9 +9,9 @@ use crate::{coordinates::ChunkRelativeBlockCoordinates, WORLD_HEIGHT};
 // https://minecraft.wiki/w/Java_Edition_level_format#level.dat_format
 
 /// Trait that other world formats MUST implement
-pub(crate) trait WorldFormat: Sized {
+pub(crate) trait WorldFormat: Sized + Send + Sync {
     /// Initialize the world format handler and get ready to load the world
-    async fn load_world(world_path: String) -> Result<Self, WorldHandlingError>;
+    async fn load_world(world_path: PathBuf) -> Result<Self, WorldHandlingError>;
     async fn get_world_info(&self) -> &WorldInfo;
     async fn read_chunk(&self, at: Vector2<i32>) -> Result<ChunkData, WorldHandlingError>;
 }

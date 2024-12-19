@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use chunk_format::AnvilChunkData;
 use compression::Compression;
 use level_dat::LevelDat;
@@ -16,17 +18,17 @@ mod level_dat;
 pub(super) struct AnvilWorldFormat {
     _lock: File,
     info: WorldInfo,
-    world_path: String,
+    world_path: PathBuf,
 }
 
 impl WorldFormat for AnvilWorldFormat {
-    async fn load_world(world_path: String) -> Result<Self, WorldHandlingError> {
+    async fn load_world(world_path: PathBuf) -> Result<Self, WorldHandlingError> {
         // Obtain file lock on session.lock to indicate the world folder is being used by the process
         // If it fails to obtain the lock then the world is being used by another process
         // https://minecraft.wiki/w/Java_Edition_level_format#session.lock_format
         let lock = OpenOptions::new()
             .write(true)
-            .open(format!("{world_path}/session.lock"))
+            .open(world_path.join("session.lock"))
             .await
             .map_err(|_| WorldHandlingError::WorldInUse)?;
 
@@ -52,10 +54,7 @@ impl WorldFormat for AnvilWorldFormat {
         // Open the region file
         let mut region_file = OpenOptions::new()
             .read(true)
-            .open(format!(
-                "./{}/region/r.{}.{}.mca",
-                &self.world_path, region.0, region.1
-            ))
+            .open(self.world_path.join(format!("region/r_{}_{}.mca", region.0, region.1)))
             .await?;
 
         // Get the location and timestamp tables
