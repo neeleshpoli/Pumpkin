@@ -14,6 +14,9 @@ use crate::{
 };
 
 pub mod anvil;
+pub mod anvil_temp;
+pub mod world_format;
+pub mod handler;
 
 const CHUNK_AREA: usize = 16 * 16;
 const SUBCHUNK_VOLUME: usize = CHUNK_AREA * 16;
