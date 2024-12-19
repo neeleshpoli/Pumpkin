@@ -1,6 +1,5 @@
 use chunk_format::AnvilChunkData;
 use compression::Compression;
-use itertools::Itertools;
 use level_dat::LevelDat;
 use pumpkin_core::math::vector2::Vector2;
 use tokio::{
@@ -90,13 +89,13 @@ impl WorldFormat for AnvilWorldFormat {
         };
 
         // TODO: check checksum to make sure chunk is not corrupted
-        let header = file_buf.drain(0..5).collect_vec();
+        let header: Vec<u8> = file_buf.drain(0..5).collect();
         let compression = Compression::try_from(header[4])?;
 
         let size = u32::from_be_bytes(header[..4].try_into().unwrap());
 
         // size includes the compression scheme byte, so we need to subtract 1
-        let chunk_data = file_buf.drain(0..size as usize - 1).collect_vec();
+        let chunk_data = file_buf.drain(0..size as usize - 1).collect();
         let decompressed_chunk = compression.decompress_data(chunk_data)?;
 
         AnvilChunkData::to_chunk_data(decompressed_chunk, at)
