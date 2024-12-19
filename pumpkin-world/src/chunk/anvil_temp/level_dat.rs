@@ -9,7 +9,7 @@ use super::compression::Compression;
 #[derive(Deserialize)]
 pub(super) struct LevelDat {
     #[serde(rename = "Data")]
-    data: Data
+    data: Data,
 }
 
 #[derive(Deserialize)]
@@ -98,10 +98,8 @@ impl From<LevelDat> for WorldInfo {
 #[tokio::test]
 async fn test_level_dat_reading_sample_1() {
     const PATH: &str = "../test/anvil-world-saving/sample-1";
-    let info = LevelDat::read_level_dat(&PATH.to_string())
-        .await
-        .unwrap();
-    
+    let info = LevelDat::read_level_dat(&PATH.to_string()).await.unwrap();
+
     let correct_info = WorldInfo {
         border_center: Vector2::new(0f64, 0f64),
         border_damage_per_block: 0.2,
@@ -127,10 +125,8 @@ async fn test_level_dat_reading_sample_1() {
 #[tokio::test]
 async fn test_level_dat_reading_sample_2() {
     const PATH: &str = "../test/anvil-world-saving/sample-2";
-    let info = LevelDat::read_level_dat(&PATH.to_string())
-        .await
-        .unwrap();
-    
+    let info = LevelDat::read_level_dat(&PATH.to_string()).await.unwrap();
+
     let correct_info = WorldInfo {
         border_center: Vector2::new(0f64, 0f64),
         border_damage_per_block: 0.2,

@@ -3,7 +3,13 @@ use std::cmp::max;
 use pumpkin_core::math::vector2::Vector2;
 use serde::Deserialize;
 
-use crate::{block::BlockState, chunk::world_format::{ChunkData, WorldHandlingError, CHUNK_AREA, CHUNK_VOLUME, SUBCHUNK_VOLUME}, coordinates::{ChunkRelativeBlockCoordinates, Height}};
+use crate::{
+    block::BlockState,
+    chunk::world_format::{
+        ChunkData, WorldHandlingError, CHUNK_AREA, CHUNK_VOLUME, SUBCHUNK_VOLUME,
+    },
+    coordinates::{ChunkRelativeBlockCoordinates, Height},
+};
 
 /// The current data version of the anvil world format
 const DATA_VERSION: i32 = 4189;
@@ -77,7 +83,10 @@ pub struct ChunkHeightmaps {
 }
 
 impl AnvilChunkData {
-    pub(super) fn to_chunk_data(chunk_data: Vec<u8>, at: Vector2<i32>) -> Result<ChunkData, WorldHandlingError> {
+    pub(super) fn to_chunk_data(
+        chunk_data: Vec<u8>,
+        at: Vector2<i32>,
+    ) -> Result<ChunkData, WorldHandlingError> {
         // Ensure the chunk has finished generating
         if fastnbt::from_bytes::<ChunkStatus>(&chunk_data)
             .map_err(|e| WorldHandlingError::DeserializationError(e.to_string()))?
@@ -91,9 +100,9 @@ impl AnvilChunkData {
 
         // Ensure we are reading chunks for the correct format version
         if chunk_data.data_version != DATA_VERSION {
-            return Err(WorldHandlingError::OutdatedWorldFormat)
+            return Err(WorldHandlingError::OutdatedWorldFormat);
         }
-        
+
         let mut chunk = ChunkData {
             blocks: Box::new([0u16; CHUNK_VOLUME]),
             motion_blocking_map: chunk_data.heightmaps.motion_blocking,
@@ -108,12 +117,13 @@ impl AnvilChunkData {
                 None => continue, // TODO @lukas0008 this should instead fill all blocks with the only element of the palette
             };
 
-            let pallete = block_states.palette
+            let pallete = block_states
+                .palette
                 .iter()
                 .map(|entry| match BlockState::new(&entry.name) {
                     // Block not found, Often the case when World has an newer or older version then block registry
                     Some(state) => state,
-                    None => BlockState::AIR,                    
+                    None => BlockState::AIR,
                 })
                 .collect::<Vec<_>>();
 
@@ -124,7 +134,7 @@ impl AnvilChunkData {
                     // We need to increase the y coordinate of the next subchunk being placed.
                     block_index += SUBCHUNK_VOLUME;
                     continue;
-                },
+                }
             };
 
             let block_bit_size = {
@@ -143,11 +153,14 @@ impl AnvilChunkData {
                     // TODO allow indexing blocks directly so we can just use block_index and save some time?
                     // this is fine because we initalized the heightmap of `blocks`
                     // from the cached value in the world file
-                    chunk.set_block_no_heightmap_update(ChunkRelativeBlockCoordinates {
-                        x: (block_index % 16).into(),
-                        y: Height::from_absolute((block_index / CHUNK_AREA) as u16),
-                        z: ((block_index % CHUNK_AREA) / 16).into(),
-                    }, block.get_id());
+                    chunk.set_block_no_heightmap_update(
+                        ChunkRelativeBlockCoordinates {
+                            x: (block_index % 16).into(),
+                            y: Height::from_absolute((block_index / CHUNK_AREA) as u16),
+                            z: ((block_index % CHUNK_AREA) / 16).into(),
+                        },
+                        block.get_id(),
+                    );
 
                     block_index += 1;
 

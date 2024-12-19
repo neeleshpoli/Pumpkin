@@ -1,6 +1,9 @@
 use pumpkin_core::math::vector2::Vector2;
 
-use super::{anvil_temp::AnvilWorldFormat, world_format::{ChunkData, WorldFormat, WorldHandlingError, WorldInfo}};
+use super::{
+    anvil_temp::AnvilWorldFormat,
+    world_format::{ChunkData, WorldFormat, WorldHandlingError, WorldInfo},
+};
 
 /// Different world formats that can be used
 /// Wrapper around the different world formats
