@@ -14,10 +14,22 @@ mod sound_id;
 #[allow(clippy::type_complexity)]
 pub fn build() -> Vec<(fn() -> TokenStream, PathBuf)> {
     vec![
-        (block_state::build, Path::new(GENERATED_DIR).join("block_state_remap.rs")),
-        (entity_id::build, Path::new(GENERATED_DIR).join("entity_id_remap.rs")),
-        (item_id::build, Path::new(GENERATED_DIR).join("item_id_remap.rs")),
-        (sound_id::build, Path::new(GENERATED_DIR).join("sound_id_remap.rs")),
+        (
+            block_state::build,
+            Path::new(GENERATED_DIR).join("block_state_remap.rs"),
+        ),
+        (
+            entity_id::build,
+            Path::new(GENERATED_DIR).join("entity_id_remap.rs"),
+        ),
+        (
+            item_id::build,
+            Path::new(GENERATED_DIR).join("item_id_remap.rs"),
+        ),
+        (
+            sound_id::build,
+            Path::new(GENERATED_DIR).join("sound_id_remap.rs"),
+        ),
     ]
 }
 
