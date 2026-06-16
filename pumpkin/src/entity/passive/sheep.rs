@@ -4,7 +4,8 @@ use std::sync::{
 };
 
 use pumpkin_data::{
-    entity::EntityType, item::Item, meta_data_type::MetaDataType, particle, tracked_data::TrackedData
+    entity::EntityType, item::Item, meta_data_type::MetaDataType, particle,
+    tracked_data::TrackedData,
 };
 use pumpkin_nbt::compound::NbtCompound;
 use pumpkin_protocol::java::client::play::Metadata;

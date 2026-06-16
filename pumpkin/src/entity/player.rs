@@ -1744,7 +1744,7 @@ impl Player {
         max_speed: f32,
         particle_count: i32,
         id: VarInt,
-        data: &[u8], 
+        data: &[u8],
     ) {
         self.client.try_enqueue_packet(&CParticle::new(
             false,

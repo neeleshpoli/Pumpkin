@@ -757,14 +757,21 @@ impl World {
         offset: Vector3<f32>,
         max_speed: f32,
         particle_count: i32,
-        particle: P
+        particle: P,
     ) {
         let id = VarInt(particle.id());
         let mut data = [0u8; 512];
         let size = particle.to_bytes(&mut data).unwrap();
 
         for player in self.players.load().iter() {
-            player.spawn_particle(position, offset, max_speed, particle_count, id, &data[..size]);
+            player.spawn_particle(
+                position,
+                offset,
+                max_speed,
+                particle_count,
+                id,
+                &data[..size],
+            );
         }
     }
 

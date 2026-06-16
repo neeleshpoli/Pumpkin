@@ -15,7 +15,7 @@ use pumpkin_data::particle::{
     SmallFlame, SmallGust, Smoke, Sneeze, Snowflake, SonicBoom, Soul, SoulFireFlame, Spit, Splash,
     SporeBlossomAir, SquidInk, SweepAttack, TotemOfUndying, TrialOmen, TrialSpawnerDetection,
     TrialSpawnerDetectionOminous, Underwater, VaultConnection, Vibration, WarpedSpore, WaxOff,
-    WaxOn, WhiteAsh, WhiteSmoke, Witch
+    WaxOn, WhiteAsh, WhiteSmoke, Witch,
 };
 use pumpkin_protocol::java::client::play::{
     ArgumentType, SerializeParticleData, SuggestionProviders,

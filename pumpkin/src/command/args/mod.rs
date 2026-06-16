@@ -6,7 +6,9 @@ use pumpkin_data::Enchantment;
 use pumpkin_data::damage::DamageType;
 use pumpkin_data::effect::StatusEffect;
 use pumpkin_data::sound::SoundCategory;
-use pumpkin_protocol::java::client::play::{ArgumentType, CommandSuggestion, SerializeParticleData, SuggestionProviders};
+use pumpkin_protocol::java::client::play::{
+    ArgumentType, CommandSuggestion, SerializeParticleData, SuggestionProviders,
+};
 use pumpkin_util::Difficulty;
 use pumpkin_util::text::TextComponent;
 use pumpkin_util::{

@@ -53,8 +53,7 @@ pub use wit::pumpkin::plugin::{
     context::{Context, Server},
     entity,
     entity_types::EntityType,
-    gui, i18n, java_dialogs, java_packets, permission, player, scoreboard, server, text,
-    world,
+    gui, i18n, java_dialogs, java_packets, permission, player, scoreboard, server, text, world,
 };
 
 pub mod java_dialog {
