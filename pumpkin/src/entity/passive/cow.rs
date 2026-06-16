@@ -1,7 +1,7 @@
 use std::sync::{Arc, Weak};
 
 use pumpkin_data::item_stack::ItemStack;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_data::{entity::EntityType, item::Item};
 use pumpkin_util::math::vector3::Vector3;
@@ -93,7 +93,7 @@ impl Mob for CowEntity {
                     Vector3::new(0.5, 0.5, 0.5),
                     1.0,
                     7,
-                    Particle::Heart,
+                    particle::Heart,
                 );
                 world.play_sound(
                     Sound::EntityCowAmbient,

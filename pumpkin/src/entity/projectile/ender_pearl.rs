@@ -11,7 +11,7 @@ use crate::{
 };
 use pumpkin_data::damage::DamageType;
 use pumpkin_data::entity::EntityStatus;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_util::math::vector3::Vector3;
 
@@ -123,7 +123,7 @@ impl EntityBase for EnderPearlEntity {
                     Vector3::new(speed.x as f32, speed.y as f32, speed.z as f32),
                     1.0,
                     1,
-                    Particle::Portal,
+                    particle::Portal,
                 );
             }
 

@@ -5,12 +5,12 @@ use crate::entity::{
 };
 use crossbeam::atomic::AtomicCell;
 use pumpkin_data::item_stack::ItemStack;
+use pumpkin_data::particle;
 use pumpkin_data::{
     damage::DamageType,
     data_component_impl::{EquipmentSlot, EquipmentType},
     entity::EntityStatus,
     item::Item,
-    particle::Particle,
     sound::{Sound, SoundCategory},
 };
 use pumpkin_nbt::{compound::NbtCompound, tag::NbtTag};
@@ -214,7 +214,6 @@ impl ArmorStandEntity {
     }
 
     /// Spawns break particles at the armor stand's position.
-    // TODO: use oak plank block particles like vanilla (requires block state data in particle system)
     fn spawn_break_particles(entity: &Entity) {
         let world = entity.world.load();
         let pos = entity.pos.load();
@@ -227,7 +226,7 @@ impl ArmorStandEntity {
             Vector3::new(width / 4.0, height / 4.0, width / 4.0),
             0.05,
             10,
-            Particle::Poof,
+            particle::Block::new(pumpkin_data::Block::OAK_PLANKS.default_state.id as i32),
         );
     }
 }

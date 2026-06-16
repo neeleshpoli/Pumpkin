@@ -5,7 +5,7 @@ use std::sync::{
 
 use crate::entity::attributes::Modifier;
 use crate::entity::attributes::ModifierOperation;
-use pumpkin_data::attributes::Attributes;
+use pumpkin_data::{attributes::Attributes, particle};
 use std::sync::LazyLock;
 use uuid::Uuid;
 
@@ -16,7 +16,6 @@ use pumpkin_data::{
     entity::EntityType,
     item::Item,
     meta_data_type::MetaDataType,
-    particle::Particle,
     sound::{Sound, SoundCategory},
     tag,
     tag::Taggable,
@@ -214,7 +213,7 @@ impl EndermanEntity {
                 Vector3::new(0.0, 0.0, 0.0),
                 0.0,
                 128,
-                Particle::Portal,
+                particle::Portal,
             );
             world.play_sound(Sound::EntityEndermanTeleport, SoundCategory::Hostile, pos);
         }

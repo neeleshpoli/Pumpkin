@@ -2,7 +2,7 @@ use super::EnderDragonPhase;
 use crate::entity::boss::ender_dragon::{DEATH_TIMER_MAX, EnderDragonEntity};
 use crate::entity::experience_orb::ExperienceOrbEntity;
 use futures::future::BoxFuture;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_util::math::vector3::Vector3;
 
@@ -49,7 +49,7 @@ impl super::Phase for DyingPhase {
                     Vector3::new(0.0, 0.0, 0.0),
                     0.0,
                     1,
-                    Particle::ExplosionEmitter,
+                    particle::ExplosionEmitter,
                 );
             }
 

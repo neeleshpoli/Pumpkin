@@ -41,7 +41,6 @@ use pumpkin_data::data_component_impl::{EquipmentSlot, EquippableImpl, ToolImpl,
 use pumpkin_data::effect::StatusEffect;
 use pumpkin_data::entity::{EntityPose, EntityStatus, EntityType};
 use pumpkin_data::item_stack::ItemStack;
-use pumpkin_data::particle::Particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_data::statistic::StatisticCategory;
 use pumpkin_data::tag::Taggable;
@@ -1744,7 +1743,8 @@ impl Player {
         offset: Vector3<f32>,
         max_speed: f32,
         particle_count: i32,
-        particle: Particle,
+        id: VarInt,
+        data: &[u8], 
     ) {
         self.client.try_enqueue_packet(&CParticle::new(
             false,
@@ -1753,8 +1753,8 @@ impl Player {
             offset,
             max_speed,
             particle_count,
-            VarInt(particle as i32),
-            &[],
+            id,
+            data,
         ));
     }
 

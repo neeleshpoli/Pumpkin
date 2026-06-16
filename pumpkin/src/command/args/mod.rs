@@ -5,9 +5,8 @@ use bounded_num::{NotInBounds, Number};
 use pumpkin_data::Enchantment;
 use pumpkin_data::damage::DamageType;
 use pumpkin_data::effect::StatusEffect;
-use pumpkin_data::particle::Particle;
 use pumpkin_data::sound::SoundCategory;
-use pumpkin_protocol::java::client::play::{ArgumentType, CommandSuggestion, SuggestionProviders};
+use pumpkin_protocol::java::client::play::{ArgumentType, CommandSuggestion, SerializeParticleData, SuggestionProviders};
 use pumpkin_util::Difficulty;
 use pumpkin_util::text::TextComponent;
 use pumpkin_util::{
@@ -126,7 +125,7 @@ pub enum Arg<'a> {
     BlockPredicate(&'a str),
     BossbarColor(BossbarColor),
     BossbarStyle(BossbarDivisions),
-    Particle(Particle),
+    Particle(Arc<dyn SerializeParticleData>),
     Msg(String),
     TextComponent(TextComponent),
     Time(i32),

@@ -1,3 +1,4 @@
+use pumpkin_data::particle;
 use pumpkin_macros::pumpkin_block;
 use pumpkin_util::math::vector3::Vector3;
 use std::collections::{HashSet, VecDeque};
@@ -6,7 +7,6 @@ use std::sync::Arc;
 use crate::block::{BlockBehaviour, BlockFuture, OnNeighborUpdateArgs, PlacedArgs};
 use pumpkin_data::Block;
 use pumpkin_data::dimension::Dimension;
-use pumpkin_data::particle::Particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_util::math::position::BlockPos;
 use pumpkin_world::world::BlockFlags;
@@ -137,7 +137,7 @@ impl BlockBehaviour for WetSpongeBlock {
                     Vector3::new(0.25, 0.0, 0.25),
                     0.01,
                     16,
-                    Particle::Cloud,
+                    particle::Cloud,
                 );
             }
         })

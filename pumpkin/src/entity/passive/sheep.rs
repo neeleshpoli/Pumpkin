@@ -4,7 +4,7 @@ use std::sync::{
 };
 
 use pumpkin_data::{
-    entity::EntityType, item::Item, meta_data_type::MetaDataType, tracked_data::TrackedData,
+    entity::EntityType, item::Item, meta_data_type::MetaDataType, particle, tracked_data::TrackedData
 };
 use pumpkin_nbt::compound::NbtCompound;
 use pumpkin_protocol::java::client::play::Metadata;
@@ -22,7 +22,6 @@ use crate::entity::{
 };
 
 use pumpkin_data::item_stack::ItemStack;
-use pumpkin_data::particle::Particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_util::math::vector3::Vector3;
 
@@ -161,7 +160,7 @@ impl Mob for SheepEntity {
                     Vector3::new(0.5, 0.5, 0.5),
                     1.0,
                     7,
-                    Particle::Heart,
+                    particle::Heart,
                 );
                 world.play_sound(
                     Sound::EntitySheepAmbient,

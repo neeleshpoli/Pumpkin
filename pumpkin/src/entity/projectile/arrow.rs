@@ -11,7 +11,7 @@ use crate::{
 use pumpkin_data::damage::DamageType;
 use pumpkin_data::item::Item;
 use pumpkin_data::item_stack::ItemStack;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_protocol::IdOr;
 use pumpkin_protocol::java::client::play::CEntityVelocity;
@@ -250,7 +250,7 @@ impl EntityBase for ArrowEntity {
                     Vector3::new(0.0f32, 0.0f32, 0.0f32),
                     0.0,
                     1,
-                    Particle::Crit,
+                    particle::Crit,
                 );
             }
 

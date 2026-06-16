@@ -5,7 +5,7 @@ use crossbeam::atomic::AtomicCell;
 use pumpkin_data::damage::DamageType;
 use pumpkin_data::effect::StatusEffect;
 use pumpkin_data::entity::EntityType;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::particle;
 use pumpkin_data::potion::Effect;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_protocol::java::client::play::{CEntityPositionSync, CEntityVelocity};
@@ -320,7 +320,7 @@ impl EntityBase for ShulkerBulletEntity {
                 Vector3::new(0.2, 0.2, 0.2),
                 0.0,
                 2,
-                Particle::Explosion,
+                particle::Explosion,
             );
             entity.remove().await;
             true
@@ -356,7 +356,7 @@ impl EntityBase for ShulkerBulletEntity {
                         Vector3::new(0.2, 0.2, 0.2),
                         0.0,
                         2,
-                        Particle::Explosion,
+                        particle::Explosion,
                     );
                     entity.remove().await;
                 }
@@ -461,7 +461,7 @@ impl EntityBase for ShulkerBulletEntity {
                         Vector3::new(0.2, 0.2, 0.2),
                         0.0,
                         2,
-                        Particle::Explosion,
+                        particle::Explosion,
                     );
                     entity.remove().await;
                 }
@@ -540,7 +540,7 @@ impl EntityBase for ShulkerBulletEntity {
                     Vector3::new(0.2, 0.2, 0.2),
                     0.0,
                     2,
-                    Particle::Explosion,
+                    particle::Explosion,
                 );
                 entity.remove().await;
                 break;

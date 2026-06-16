@@ -10,6 +10,7 @@ use crate::{
 };
 use pumpkin_data::item_stack::ItemStack;
 use pumpkin_data::meta_data_type::MetaDataType;
+use pumpkin_data::particle;
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_data::tracked_data::TrackedData;
 use pumpkin_protocol::java::client::play::Metadata;
@@ -131,7 +132,7 @@ impl FishingBobberEntity {
                         Vector3::new(0.1f32, 0.1f32, 0.1f32),
                         0.0,
                         5,
-                        pumpkin_data::particle::Particle::Bubble,
+                        particle::Bubble,
                     );
                 }
             } else {

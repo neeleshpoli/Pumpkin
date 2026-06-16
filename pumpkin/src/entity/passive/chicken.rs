@@ -3,8 +3,7 @@ use std::sync::{
     atomic::{AtomicI32, Ordering, Ordering::Relaxed},
 };
 
-use pumpkin_data::item_stack::ItemStack;
-use pumpkin_data::particle::Particle;
+use pumpkin_data::{item_stack::ItemStack, particle};
 use pumpkin_data::sound::{Sound, SoundCategory};
 use pumpkin_data::{entity::EntityType, item::Item};
 use pumpkin_util::math::vector3::Vector3;
@@ -132,7 +131,7 @@ impl Mob for ChickenEntity {
                     Vector3::new(0.5, 0.5, 0.5),
                     1.0,
                     7,
-                    Particle::Heart,
+                    particle::Heart,
                 );
                 world.play_sound(
                     Sound::EntityChickenAmbient,

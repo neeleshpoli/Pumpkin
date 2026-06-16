@@ -5,7 +5,7 @@ use rayon::prelude::*;
 use std::{
     fs,
     io::Write,
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -65,78 +65,185 @@ mod wit;
 mod world_event;
 
 /// Output directory where all generated Rust source files are written.
-pub const OUT_DIR: &str = "../pumpkin-data/src/generated";
+pub const GENERATED_DIR: &str = "../pumpkin-data/src/generated";
+pub const NETWORK_SERIALIZATION_DIR: &str = "../pumpkin-protocol/src/java/client/play";
+pub const PLUGIN_BINDINGS_DIR: &str = "../pumpkin/src/plugin/loader/wasm/wasm_host/wit/v0_1";
 
 /// Entry point for the code generator. Runs all registered builder functions in parallel
-/// and writes their output to [`OUT_DIR`].
 pub fn main() {
     type BuilderFn = fn() -> TokenStream;
 
-    fs::create_dir_all(OUT_DIR).expect("Failed to create output directory");
+    fs::create_dir_all(GENERATED_DIR).expect("Failed to create output directory");
 
     wit::main();
 
-    let mut build_functions: Vec<(BuilderFn, &str)> = vec![
-        (advancement::build, "advancement.rs"),
-        (packet::build, "packet.rs"),
-        (screen::build, "screen.rs"),
-        (particle::build, "particle.rs"),
-        (sound::build, "sound.rs"),
-        (meta_data_type::build, "meta_data_type.rs"),
-        (tracked_data::build, "tracked_data.rs"),
-        (chunk_status::build, "chunk_status.rs"),
-        (game_event::build, "game_event.rs"),
-        (game_rules::build, "game_rules.rs"),
-        (registry::build, "registry.rs"),
-        (dimension::build, "dimension.rs"),
-        (translations::build, "translation.rs"),
-        (jukebox_song::build, "jukebox_song.rs"),
-        (sound_category::build, "sound_category.rs"),
-        (entity_pose::build, "entity_pose.rs"),
-        (scoreboard_slot::build, "scoreboard_slot.rs"),
-        (world_event::build, "world_event.rs"),
-        (entity_type::build, "entity_type.rs"),
-        (statistic::build, "statistic.rs"),
-        (noise_parameter::build, "noise_parameter.rs"),
-        (biome::build, "biome.rs"),
-        (damage_type::build, "damage_type.rs"),
-        (message_type::build, "message_type.rs"),
-        (spawn_egg::build, "spawn_egg.rs"),
-        (block::build, "block.rs"),
-        (item::build, "item.rs"),
-        (structures::build, "structures.rs"),
-        (chunk_gen_settings::build, "chunk_gen_settings.rs"),
-        (fluid::build, "fluid.rs"),
-        (entity_status::build, "entity_status.rs"),
-        (tag::build, "tag.rs"),
-        (noise_router::build, "noise_router.rs"),
-        (villager::build, "villager.rs"),
+    let mut build_functions: Vec<(BuilderFn, PathBuf)> = vec![
+        (advancement::build, Path::new(GENERATED_DIR).join("advancement.rs")),
+        (packet::build, Path::new(GENERATED_DIR).join("packet.rs")),
+        (screen::build, Path::new(GENERATED_DIR).join("screen.rs")),
+        (
+            particle::build,
+            Path::new(GENERATED_DIR).join("particle.rs"),
+        ),
+        (
+            particle::build_serialization,
+            Path::new(NETWORK_SERIALIZATION_DIR).join("particle_data.rs"),
+        ),
+        (
+            particle::build_wit_bindings,
+            Path::new(PLUGIN_BINDINGS_DIR).join("particle.rs"),
+        ),
+        (sound::build, Path::new(GENERATED_DIR).join("sound.rs")),
+        (
+            meta_data_type::build,
+            Path::new(GENERATED_DIR).join("meta_data_type.rs"),
+        ),
+        (
+            tracked_data::build,
+            Path::new(GENERATED_DIR).join("tracked_data.rs"),
+        ),
+        (
+            chunk_status::build,
+            Path::new(GENERATED_DIR).join("chunk_status.rs"),
+        ),
+        (
+            game_event::build,
+            Path::new(GENERATED_DIR).join("game_event.rs"),
+        ),
+        (
+            game_rules::build,
+            Path::new(GENERATED_DIR).join("game_rules.rs"),
+        ),
+        (
+            registry::build,
+            Path::new(GENERATED_DIR).join("registry.rs"),
+        ),
+        (
+            dimension::build,
+            Path::new(GENERATED_DIR).join("dimension.rs"),
+        ),
+        (
+            translations::build,
+            Path::new(GENERATED_DIR).join("translation.rs"),
+        ),
+        (
+            jukebox_song::build,
+            Path::new(GENERATED_DIR).join("jukebox_song.rs"),
+        ),
+        (
+            sound_category::build,
+            Path::new(GENERATED_DIR).join("sound_category.rs"),
+        ),
+        (
+            entity_pose::build,
+            Path::new(GENERATED_DIR).join("entity_pose.rs"),
+        ),
+        (
+            scoreboard_slot::build,
+            Path::new(GENERATED_DIR).join("scoreboard_slot.rs"),
+        ),
+        (
+            world_event::build,
+            Path::new(GENERATED_DIR).join("world_event.rs"),
+        ),
+        (
+            entity_type::build,
+            Path::new(GENERATED_DIR).join("entity_type.rs"),
+        ),
+        (
+            noise_parameter::build,
+            Path::new(GENERATED_DIR).join("noise_parameter.rs"),
+        ),
+        (biome::build, Path::new(GENERATED_DIR).join("biome.rs")),
+        (
+            damage_type::build,
+            Path::new(GENERATED_DIR).join("damage_type.rs"),
+        ),
+        (
+            message_type::build,
+            Path::new(GENERATED_DIR).join("message_type.rs"),
+        ),
+        (
+            spawn_egg::build,
+            Path::new(GENERATED_DIR).join("spawn_egg.rs"),
+        ),
+        (block::build, Path::new(GENERATED_DIR).join("block.rs")),
+        (item::build, Path::new(GENERATED_DIR).join("item.rs")),
+        (
+            structures::build,
+            Path::new(GENERATED_DIR).join("structures.rs"),
+        ),
+        (
+            chunk_gen_settings::build,
+            Path::new(GENERATED_DIR).join("chunk_gen_settings.rs"),
+        ),
+        (fluid::build, Path::new(GENERATED_DIR).join("fluid.rs")),
+        (
+            entity_status::build,
+            Path::new(GENERATED_DIR).join("entity_status.rs"),
+        ),
+        (tag::build, Path::new(GENERATED_DIR).join("tag.rs")),
+        (
+            noise_router::build,
+            Path::new(GENERATED_DIR).join("noise_router.rs"),
+        ),
+        (
+            villager::build,
+            Path::new(GENERATED_DIR).join("villager.rs"),
+        ),
         (
             flower_pot_transformations::build,
-            "flower_pot_transformations.rs",
+            Path::new(GENERATED_DIR).join("flower_pot_transformations.rs"),
         ),
         (
             composter_increase_chance::build,
-            "composter_increase_chance.rs",
+            Path::new(GENERATED_DIR).join("composter_increase_chance.rs"),
         ),
-        (recipes::build, "recipes.rs"),
-        (enchantments::build, "enchantment.rs"),
-        (fuels::build, "fuels.rs"),
-        (data_component::build, "data_component.rs"),
-        (attributes::build, "attributes.rs"),
-        (effect::build, "effect.rs"),
-        (potion::build, "potion.rs"),
-        (potion_brewing::build, "potion_brewing.rs"),
-        (recipe_remainder::build, "recipe_remainder.rs"),
-        (placed_feature::build_enum, "placed_feature.rs"),
-        (placed_feature::build, "placed_features_generated.rs"),
-        (configured_feature::build_enum, "configured_feature.rs"),
+        (recipes::build, Path::new(GENERATED_DIR).join("recipes.rs")),
+        (
+            enchantments::build,
+            Path::new(GENERATED_DIR).join("enchantment.rs"),
+        ),
+        (fuels::build, Path::new(GENERATED_DIR).join("fuels.rs")),
+        (
+            data_component::build,
+            Path::new(GENERATED_DIR).join("data_component.rs"),
+        ),
+        (
+            attributes::build,
+            Path::new(GENERATED_DIR).join("attributes.rs"),
+        ),
+        (effect::build, Path::new(GENERATED_DIR).join("effect.rs")),
+        (potion::build, Path::new(GENERATED_DIR).join("potion.rs")),
+        (
+            potion_brewing::build,
+            Path::new(GENERATED_DIR).join("potion_brewing.rs"),
+        ),
+        (
+            recipe_remainder::build,
+            Path::new(GENERATED_DIR).join("recipe_remainder.rs"),
+        ),
+        (
+            placed_feature::build_enum,
+            Path::new(GENERATED_DIR).join("placed_feature.rs"),
+        ),
+        (
+            placed_feature::build,
+            Path::new(GENERATED_DIR).join("placed_features_generated.rs"),
+        ),
+        (
+            configured_feature::build_enum,
+            Path::new(GENERATED_DIR).join("configured_feature.rs"),
+        ),
         (
             configured_feature::build,
-            "configured_features_generated.rs",
+            Path::new(GENERATED_DIR).join("configured_features_generated.rs"),
         ),
-        (carver::build, "carver.rs"),
-        (chest_loot::build, "chest_loot.rs"),
+        (carver::build, Path::new(GENERATED_DIR).join("carver.rs")),
+        (
+            chest_loot::build,
+            Path::new(GENERATED_DIR).join("chest_loot.rs"),
+        ),
     ];
     build_functions.extend(remap::build());
 
@@ -149,27 +256,41 @@ pub fn main() {
         build_functions
             .into_iter()
             .filter(|(_, file)| {
-                let stem = file.trim_end_matches(".rs");
-                filters.iter().any(|f| f == stem || f == *file)
+                let stem = file.file_stem().and_then(|s| s.to_str());
+
+                let full_path_str = file.to_str();
+
+                filters
+                    .iter()
+                    .any(|f| Some(f.as_str()) == stem || Some(f.as_str()) == full_path_str)
             })
             .collect()
     };
 
     build_functions.par_iter().for_each(|(build_fn, file)| {
-        println!("Parsing {}", file);
+        println!("Parsing {:#?}", file.file_name().unwrap());
 
-        let raw_code = build_fn().to_string();
-
-        let header = "/* This file is generated. Do not edit manually. */\n";
-
-        let final_code = format_code(&raw_code).map_or_else(
-            |_| format!("{header}{raw_code}"),
-            |formatted| format!("{header}{formatted}"),
-        );
-
-        write_generated_file(&final_code, file);
+        output_code(build_fn(), file);
     });
     println!("Done")
+}
+
+/// Writes the generated code with a warning and proper format
+///
+/// # Arguments
+/// - `token_stream` - The code to write.
+/// - `file` - The file to write to.
+pub fn output_code(token_stream: TokenStream, file: &PathBuf) {
+    let raw_code = token_stream.to_string();
+
+    let header = "/* This file is generated. Do not edit manually. */\n";
+
+    let final_code = format_code(&raw_code).map_or_else(
+        |_| format!("{header}{raw_code}"),
+        |formatted| format!("{header}{formatted}"),
+    );
+
+    write_generated_file(&final_code, file);
 }
 
 /// Converts a slice of strings into a `TokenStream` of PascalCase enum variants.
@@ -193,10 +314,8 @@ pub fn array_to_tokenstream(array: &[String]) -> TokenStream {
 ///
 /// # Arguments
 /// - `new_code` – The formatted source code string to write.
-/// - `out_file` – The filename (relative to [`OUT_DIR`]) to write into.
-pub fn write_generated_file(new_code: &str, out_file: &str) {
-    let path = Path::new(OUT_DIR).join(out_file);
-
+/// - `path` – The file to write to.
+pub fn write_generated_file(new_code: &str, path: &PathBuf) {
     if path.exists()
         && let Ok(existing_code) = fs::read_to_string(&path)
         && existing_code == new_code

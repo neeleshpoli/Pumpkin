@@ -2,7 +2,7 @@ use std::sync::atomic::Ordering;
 
 use crate::entity::EntityBase;
 use pumpkin_data::{
-    particle::Particle,
+    particle,
     sound::{Sound, SoundCategory},
 };
 use pumpkin_util::math::vector3::Vector3;
@@ -86,7 +86,7 @@ pub fn spawn_sweep_particle(attacker_entity: &Entity, world: &World, pos: &Vecto
         Vector3::new(0.0, 0.0, 0.0),
         0.0,
         0,
-        Particle::SweepAttack,
+        particle::SweepAttack,
     );
 }
 

@@ -20,6 +20,7 @@ pub mod i18n;
 pub mod item_stack;
 pub mod java_dialogs;
 pub mod logging;
+pub mod particle;
 pub mod permission;
 pub mod player;
 pub mod recipe;
@@ -34,7 +35,7 @@ bindgen!({
     path: "../pumpkin-plugin-wit/v0.1",
     world: "plugin",
     imports: { default: async | trappable },
-    exports: { default: async | trappable},
+    exports: { default: async | trappable },
 });
 
 impl pumpkin::plugin::java_packets::Host for PluginHostState {}

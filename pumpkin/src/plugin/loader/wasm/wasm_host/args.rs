@@ -1,5 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
+use pumpkin_protocol::java::client::play::SerializeParticleData;
 use pumpkin_util::text::TextComponent;
 
 use crate::{command::tree::CommandTree, entity::player::Player};
@@ -24,7 +25,7 @@ pub enum OwnedArg {
     BlockPredicate(String),
     BossbarColor(crate::world::bossbar::BossbarColor),
     BossbarStyle(crate::world::bossbar::BossbarDivisions),
-    Particle(pumpkin_data::particle::Particle),
+    Particle(Arc<dyn SerializeParticleData>),
     Msg(String),
     TextComponent(TextComponent),
     Time(i32),
@@ -66,7 +67,7 @@ impl OwnedArg {
             Arg::BlockPredicate(s) => Self::BlockPredicate(s.to_string()),
             Arg::BossbarColor(c) => Self::BossbarColor(*c),
             Arg::BossbarStyle(s) => Self::BossbarStyle(*s),
-            Arg::Particle(p) => Self::Particle(*p),
+            Arg::Particle(p) => Self::Particle(p.clone()),
             Arg::Msg(m) => Self::Msg(m.clone()),
             Arg::TextComponent(t) => Self::TextComponent(t.clone()),
             Arg::Time(t) => Self::Time(*t),

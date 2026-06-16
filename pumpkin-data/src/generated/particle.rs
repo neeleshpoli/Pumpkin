@@ -1,371 +1,363 @@
 /* This file is generated. Do not edit manually. */
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum Particle {
-    AngryVillager,
-    Block,
-    BlockMarker,
-    Bubble,
-    Cloud,
-    CopperFireFlame,
-    Crit,
-    DamageIndicator,
-    DragonBreath,
-    DrippingLava,
-    FallingLava,
-    LandingLava,
-    DrippingWater,
-    FallingWater,
-    Dust,
-    DustColorTransition,
-    Effect,
-    ElderGuardian,
-    EnchantedHit,
-    Enchant,
-    EndRod,
-    EntityEffect,
-    ExplosionEmitter,
-    Explosion,
-    Gust,
-    SmallGust,
-    GustEmitterLarge,
-    GustEmitterSmall,
-    SonicBoom,
-    FallingDust,
-    Firework,
-    Fishing,
-    Flame,
-    Infested,
-    CherryLeaves,
-    PaleOakLeaves,
-    TintedLeaves,
-    SculkSoul,
-    SculkCharge,
-    SculkChargePop,
-    SoulFireFlame,
-    Soul,
-    Flash,
-    HappyVillager,
-    Composter,
-    Heart,
-    InstantEffect,
-    Item,
-    Vibration,
-    Trail,
-    PauseMobGrowth,
-    ResetMobGrowth,
-    ItemSlime,
-    ItemCobweb,
-    ItemSnowball,
-    LargeSmoke,
-    Lava,
-    Mycelium,
-    Note,
-    Poof,
-    Portal,
-    Rain,
-    Smoke,
-    WhiteSmoke,
-    Sneeze,
-    Spit,
-    SquidInk,
-    SweepAttack,
-    TotemOfUndying,
-    Underwater,
-    Splash,
-    Witch,
-    BubblePop,
-    CurrentDown,
-    BubbleColumnUp,
-    Nautilus,
-    Dolphin,
-    CampfireCosySmoke,
-    CampfireSignalSmoke,
-    DrippingHoney,
-    FallingHoney,
-    LandingHoney,
-    FallingNectar,
-    FallingSporeBlossom,
-    Ash,
-    CrimsonSpore,
-    WarpedSpore,
-    SporeBlossomAir,
-    DrippingObsidianTear,
-    FallingObsidianTear,
-    LandingObsidianTear,
-    ReversePortal,
-    WhiteAsh,
-    SmallFlame,
-    Snowflake,
-    DrippingDripstoneLava,
-    FallingDripstoneLava,
-    DrippingDripstoneWater,
-    FallingDripstoneWater,
-    GlowSquidInk,
-    Glow,
-    WaxOn,
-    WaxOff,
-    ElectricSpark,
-    Scrape,
-    Shriek,
-    EggCrack,
-    DustPlume,
-    TrialSpawnerDetection,
-    TrialSpawnerDetectionOminous,
-    VaultConnection,
-    DustPillar,
-    OminousSpawning,
-    RaidOmen,
-    TrialOmen,
-    BlockCrumble,
-    Firefly,
+use pumpkin_util::math::vector3::Vector3;
+#[derive(Clone, Copy, Debug)]
+pub struct AngryVillager;
+#[derive(Clone, Copy, Debug)]
+pub struct Block {
+    pub state: i32,
 }
-impl Particle {
-    #[doc = r" Try to parse a `Particle` from a resource location string."]
-    #[must_use]
-    #[allow(clippy::too_many_lines)]
-    pub fn from_name(name: &str) -> Option<Self> {
-        match name {
-            "angry_villager" => Some(Self::AngryVillager),
-            "block" => Some(Self::Block),
-            "block_marker" => Some(Self::BlockMarker),
-            "bubble" => Some(Self::Bubble),
-            "cloud" => Some(Self::Cloud),
-            "copper_fire_flame" => Some(Self::CopperFireFlame),
-            "crit" => Some(Self::Crit),
-            "damage_indicator" => Some(Self::DamageIndicator),
-            "dragon_breath" => Some(Self::DragonBreath),
-            "dripping_lava" => Some(Self::DrippingLava),
-            "falling_lava" => Some(Self::FallingLava),
-            "landing_lava" => Some(Self::LandingLava),
-            "dripping_water" => Some(Self::DrippingWater),
-            "falling_water" => Some(Self::FallingWater),
-            "dust" => Some(Self::Dust),
-            "dust_color_transition" => Some(Self::DustColorTransition),
-            "effect" => Some(Self::Effect),
-            "elder_guardian" => Some(Self::ElderGuardian),
-            "enchanted_hit" => Some(Self::EnchantedHit),
-            "enchant" => Some(Self::Enchant),
-            "end_rod" => Some(Self::EndRod),
-            "entity_effect" => Some(Self::EntityEffect),
-            "explosion_emitter" => Some(Self::ExplosionEmitter),
-            "explosion" => Some(Self::Explosion),
-            "gust" => Some(Self::Gust),
-            "small_gust" => Some(Self::SmallGust),
-            "gust_emitter_large" => Some(Self::GustEmitterLarge),
-            "gust_emitter_small" => Some(Self::GustEmitterSmall),
-            "sonic_boom" => Some(Self::SonicBoom),
-            "falling_dust" => Some(Self::FallingDust),
-            "firework" => Some(Self::Firework),
-            "fishing" => Some(Self::Fishing),
-            "flame" => Some(Self::Flame),
-            "infested" => Some(Self::Infested),
-            "cherry_leaves" => Some(Self::CherryLeaves),
-            "pale_oak_leaves" => Some(Self::PaleOakLeaves),
-            "tinted_leaves" => Some(Self::TintedLeaves),
-            "sculk_soul" => Some(Self::SculkSoul),
-            "sculk_charge" => Some(Self::SculkCharge),
-            "sculk_charge_pop" => Some(Self::SculkChargePop),
-            "soul_fire_flame" => Some(Self::SoulFireFlame),
-            "soul" => Some(Self::Soul),
-            "flash" => Some(Self::Flash),
-            "happy_villager" => Some(Self::HappyVillager),
-            "composter" => Some(Self::Composter),
-            "heart" => Some(Self::Heart),
-            "instant_effect" => Some(Self::InstantEffect),
-            "item" => Some(Self::Item),
-            "vibration" => Some(Self::Vibration),
-            "trail" => Some(Self::Trail),
-            "pause_mob_growth" => Some(Self::PauseMobGrowth),
-            "reset_mob_growth" => Some(Self::ResetMobGrowth),
-            "item_slime" => Some(Self::ItemSlime),
-            "item_cobweb" => Some(Self::ItemCobweb),
-            "item_snowball" => Some(Self::ItemSnowball),
-            "large_smoke" => Some(Self::LargeSmoke),
-            "lava" => Some(Self::Lava),
-            "mycelium" => Some(Self::Mycelium),
-            "note" => Some(Self::Note),
-            "poof" => Some(Self::Poof),
-            "portal" => Some(Self::Portal),
-            "rain" => Some(Self::Rain),
-            "smoke" => Some(Self::Smoke),
-            "white_smoke" => Some(Self::WhiteSmoke),
-            "sneeze" => Some(Self::Sneeze),
-            "spit" => Some(Self::Spit),
-            "squid_ink" => Some(Self::SquidInk),
-            "sweep_attack" => Some(Self::SweepAttack),
-            "totem_of_undying" => Some(Self::TotemOfUndying),
-            "underwater" => Some(Self::Underwater),
-            "splash" => Some(Self::Splash),
-            "witch" => Some(Self::Witch),
-            "bubble_pop" => Some(Self::BubblePop),
-            "current_down" => Some(Self::CurrentDown),
-            "bubble_column_up" => Some(Self::BubbleColumnUp),
-            "nautilus" => Some(Self::Nautilus),
-            "dolphin" => Some(Self::Dolphin),
-            "campfire_cosy_smoke" => Some(Self::CampfireCosySmoke),
-            "campfire_signal_smoke" => Some(Self::CampfireSignalSmoke),
-            "dripping_honey" => Some(Self::DrippingHoney),
-            "falling_honey" => Some(Self::FallingHoney),
-            "landing_honey" => Some(Self::LandingHoney),
-            "falling_nectar" => Some(Self::FallingNectar),
-            "falling_spore_blossom" => Some(Self::FallingSporeBlossom),
-            "ash" => Some(Self::Ash),
-            "crimson_spore" => Some(Self::CrimsonSpore),
-            "warped_spore" => Some(Self::WarpedSpore),
-            "spore_blossom_air" => Some(Self::SporeBlossomAir),
-            "dripping_obsidian_tear" => Some(Self::DrippingObsidianTear),
-            "falling_obsidian_tear" => Some(Self::FallingObsidianTear),
-            "landing_obsidian_tear" => Some(Self::LandingObsidianTear),
-            "reverse_portal" => Some(Self::ReversePortal),
-            "white_ash" => Some(Self::WhiteAsh),
-            "small_flame" => Some(Self::SmallFlame),
-            "snowflake" => Some(Self::Snowflake),
-            "dripping_dripstone_lava" => Some(Self::DrippingDripstoneLava),
-            "falling_dripstone_lava" => Some(Self::FallingDripstoneLava),
-            "dripping_dripstone_water" => Some(Self::DrippingDripstoneWater),
-            "falling_dripstone_water" => Some(Self::FallingDripstoneWater),
-            "glow_squid_ink" => Some(Self::GlowSquidInk),
-            "glow" => Some(Self::Glow),
-            "wax_on" => Some(Self::WaxOn),
-            "wax_off" => Some(Self::WaxOff),
-            "electric_spark" => Some(Self::ElectricSpark),
-            "scrape" => Some(Self::Scrape),
-            "shriek" => Some(Self::Shriek),
-            "egg_crack" => Some(Self::EggCrack),
-            "dust_plume" => Some(Self::DustPlume),
-            "trial_spawner_detection" => Some(Self::TrialSpawnerDetection),
-            "trial_spawner_detection_ominous" => Some(Self::TrialSpawnerDetectionOminous),
-            "vault_connection" => Some(Self::VaultConnection),
-            "dust_pillar" => Some(Self::DustPillar),
-            "ominous_spawning" => Some(Self::OminousSpawning),
-            "raid_omen" => Some(Self::RaidOmen),
-            "trial_omen" => Some(Self::TrialOmen),
-            "block_crumble" => Some(Self::BlockCrumble),
-            "firefly" => Some(Self::Firefly),
-            _ => None,
-        }
+impl Block {
+    pub fn new(state: i32) -> Self {
+        Self { state }
     }
-    #[must_use]
-    #[allow(clippy::too_many_lines)]
-    pub const fn to_name(&self) -> &'static str {
-        match self {
-            Self::AngryVillager => "angry_villager",
-            Self::Block => "block",
-            Self::BlockMarker => "block_marker",
-            Self::Bubble => "bubble",
-            Self::Cloud => "cloud",
-            Self::CopperFireFlame => "copper_fire_flame",
-            Self::Crit => "crit",
-            Self::DamageIndicator => "damage_indicator",
-            Self::DragonBreath => "dragon_breath",
-            Self::DrippingLava => "dripping_lava",
-            Self::FallingLava => "falling_lava",
-            Self::LandingLava => "landing_lava",
-            Self::DrippingWater => "dripping_water",
-            Self::FallingWater => "falling_water",
-            Self::Dust => "dust",
-            Self::DustColorTransition => "dust_color_transition",
-            Self::Effect => "effect",
-            Self::ElderGuardian => "elder_guardian",
-            Self::EnchantedHit => "enchanted_hit",
-            Self::Enchant => "enchant",
-            Self::EndRod => "end_rod",
-            Self::EntityEffect => "entity_effect",
-            Self::ExplosionEmitter => "explosion_emitter",
-            Self::Explosion => "explosion",
-            Self::Gust => "gust",
-            Self::SmallGust => "small_gust",
-            Self::GustEmitterLarge => "gust_emitter_large",
-            Self::GustEmitterSmall => "gust_emitter_small",
-            Self::SonicBoom => "sonic_boom",
-            Self::FallingDust => "falling_dust",
-            Self::Firework => "firework",
-            Self::Fishing => "fishing",
-            Self::Flame => "flame",
-            Self::Infested => "infested",
-            Self::CherryLeaves => "cherry_leaves",
-            Self::PaleOakLeaves => "pale_oak_leaves",
-            Self::TintedLeaves => "tinted_leaves",
-            Self::SculkSoul => "sculk_soul",
-            Self::SculkCharge => "sculk_charge",
-            Self::SculkChargePop => "sculk_charge_pop",
-            Self::SoulFireFlame => "soul_fire_flame",
-            Self::Soul => "soul",
-            Self::Flash => "flash",
-            Self::HappyVillager => "happy_villager",
-            Self::Composter => "composter",
-            Self::Heart => "heart",
-            Self::InstantEffect => "instant_effect",
-            Self::Item => "item",
-            Self::Vibration => "vibration",
-            Self::Trail => "trail",
-            Self::PauseMobGrowth => "pause_mob_growth",
-            Self::ResetMobGrowth => "reset_mob_growth",
-            Self::ItemSlime => "item_slime",
-            Self::ItemCobweb => "item_cobweb",
-            Self::ItemSnowball => "item_snowball",
-            Self::LargeSmoke => "large_smoke",
-            Self::Lava => "lava",
-            Self::Mycelium => "mycelium",
-            Self::Note => "note",
-            Self::Poof => "poof",
-            Self::Portal => "portal",
-            Self::Rain => "rain",
-            Self::Smoke => "smoke",
-            Self::WhiteSmoke => "white_smoke",
-            Self::Sneeze => "sneeze",
-            Self::Spit => "spit",
-            Self::SquidInk => "squid_ink",
-            Self::SweepAttack => "sweep_attack",
-            Self::TotemOfUndying => "totem_of_undying",
-            Self::Underwater => "underwater",
-            Self::Splash => "splash",
-            Self::Witch => "witch",
-            Self::BubblePop => "bubble_pop",
-            Self::CurrentDown => "current_down",
-            Self::BubbleColumnUp => "bubble_column_up",
-            Self::Nautilus => "nautilus",
-            Self::Dolphin => "dolphin",
-            Self::CampfireCosySmoke => "campfire_cosy_smoke",
-            Self::CampfireSignalSmoke => "campfire_signal_smoke",
-            Self::DrippingHoney => "dripping_honey",
-            Self::FallingHoney => "falling_honey",
-            Self::LandingHoney => "landing_honey",
-            Self::FallingNectar => "falling_nectar",
-            Self::FallingSporeBlossom => "falling_spore_blossom",
-            Self::Ash => "ash",
-            Self::CrimsonSpore => "crimson_spore",
-            Self::WarpedSpore => "warped_spore",
-            Self::SporeBlossomAir => "spore_blossom_air",
-            Self::DrippingObsidianTear => "dripping_obsidian_tear",
-            Self::FallingObsidianTear => "falling_obsidian_tear",
-            Self::LandingObsidianTear => "landing_obsidian_tear",
-            Self::ReversePortal => "reverse_portal",
-            Self::WhiteAsh => "white_ash",
-            Self::SmallFlame => "small_flame",
-            Self::Snowflake => "snowflake",
-            Self::DrippingDripstoneLava => "dripping_dripstone_lava",
-            Self::FallingDripstoneLava => "falling_dripstone_lava",
-            Self::DrippingDripstoneWater => "dripping_dripstone_water",
-            Self::FallingDripstoneWater => "falling_dripstone_water",
-            Self::GlowSquidInk => "glow_squid_ink",
-            Self::Glow => "glow",
-            Self::WaxOn => "wax_on",
-            Self::WaxOff => "wax_off",
-            Self::ElectricSpark => "electric_spark",
-            Self::Scrape => "scrape",
-            Self::Shriek => "shriek",
-            Self::EggCrack => "egg_crack",
-            Self::DustPlume => "dust_plume",
-            Self::TrialSpawnerDetection => "trial_spawner_detection",
-            Self::TrialSpawnerDetectionOminous => "trial_spawner_detection_ominous",
-            Self::VaultConnection => "vault_connection",
-            Self::DustPillar => "dust_pillar",
-            Self::OminousSpawning => "ominous_spawning",
-            Self::RaidOmen => "raid_omen",
-            Self::TrialOmen => "trial_omen",
-            Self::BlockCrumble => "block_crumble",
-            Self::Firefly => "firefly",
+}
+#[derive(Clone, Copy, Debug)]
+pub struct BlockMarker {
+    pub state: i32,
+}
+impl BlockMarker {
+    pub fn new(state: i32) -> Self {
+        Self { state }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct Bubble;
+#[derive(Clone, Copy, Debug)]
+pub struct Cloud;
+#[derive(Clone, Copy, Debug)]
+pub struct CopperFireFlame;
+#[derive(Clone, Copy, Debug)]
+pub struct Crit;
+#[derive(Clone, Copy, Debug)]
+pub struct DamageIndicator;
+#[derive(Clone, Copy, Debug)]
+pub struct DragonBreath {
+    pub power: f32,
+}
+impl DragonBreath {
+    pub fn new(power: f32) -> Self {
+        Self { power }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingLava;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingLava;
+#[derive(Clone, Copy, Debug)]
+pub struct LandingLava;
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingWater;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingWater;
+#[derive(Clone, Copy, Debug)]
+pub struct Dust {
+    pub color: i32,
+    pub scale: f32,
+}
+impl Dust {
+    pub fn new(color: i32, scale: f32) -> Self {
+        Self { color, scale }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct DustColorTransition {
+    pub from_color: i32,
+    pub to_color: i32,
+    pub scale: f32,
+}
+impl DustColorTransition {
+    pub fn new(from_color: i32, to_color: i32, scale: f32) -> Self {
+        Self {
+            from_color,
+            to_color,
+            scale,
         }
     }
 }
+#[derive(Clone, Copy, Debug)]
+pub struct Effect {
+    pub color: i32,
+    pub power: f32,
+}
+impl Effect {
+    pub fn new(color: i32, power: f32) -> Self {
+        Self { color, power }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct ElderGuardian;
+#[derive(Clone, Copy, Debug)]
+pub struct EnchantedHit;
+#[derive(Clone, Copy, Debug)]
+pub struct Enchant;
+#[derive(Clone, Copy, Debug)]
+pub struct EndRod;
+#[derive(Clone, Copy, Debug)]
+pub struct EntityEffect {
+    pub color: i32,
+}
+impl EntityEffect {
+    pub fn new(color: i32) -> Self {
+        Self { color }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct ExplosionEmitter;
+#[derive(Clone, Copy, Debug)]
+pub struct Explosion;
+#[derive(Clone, Copy, Debug)]
+pub struct Gust;
+#[derive(Clone, Copy, Debug)]
+pub struct SmallGust;
+#[derive(Clone, Copy, Debug)]
+pub struct GustEmitterLarge;
+#[derive(Clone, Copy, Debug)]
+pub struct GustEmitterSmall;
+#[derive(Clone, Copy, Debug)]
+pub struct SonicBoom;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingDust {
+    pub state: i32,
+}
+impl FallingDust {
+    pub fn new(state: i32) -> Self {
+        Self { state }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct Firework;
+#[derive(Clone, Copy, Debug)]
+pub struct Fishing;
+#[derive(Clone, Copy, Debug)]
+pub struct Flame;
+#[derive(Clone, Copy, Debug)]
+pub struct Infested;
+#[derive(Clone, Copy, Debug)]
+pub struct CherryLeaves;
+#[derive(Clone, Copy, Debug)]
+pub struct PaleOakLeaves;
+#[derive(Clone, Copy, Debug)]
+pub struct TintedLeaves {
+    pub color: i32,
+}
+impl TintedLeaves {
+    pub fn new(color: i32) -> Self {
+        Self { color }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct SculkSoul;
+#[derive(Clone, Copy, Debug)]
+pub struct SculkCharge {
+    pub roll: f32,
+}
+impl SculkCharge {
+    pub fn new(roll: f32) -> Self {
+        Self { roll }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct SculkChargePop;
+#[derive(Clone, Copy, Debug)]
+pub struct SoulFireFlame;
+#[derive(Clone, Copy, Debug)]
+pub struct Soul;
+#[derive(Clone, Copy, Debug)]
+pub struct Flash {
+    pub color: i32,
+}
+impl Flash {
+    pub fn new(color: i32) -> Self {
+        Self { color }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct HappyVillager;
+#[derive(Clone, Copy, Debug)]
+pub struct Composter;
+#[derive(Clone, Copy, Debug)]
+pub struct Heart;
+#[derive(Clone, Copy, Debug)]
+pub struct InstantEffect {
+    pub color: i32,
+    pub power: f32,
+}
+impl InstantEffect {
+    pub fn new(color: i32, power: f32) -> Self {
+        Self { color, power }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct Item;
+#[derive(Clone, Copy, Debug)]
+pub struct Vibration;
+#[derive(Clone, Copy, Debug)]
+pub struct Trail {
+    pub target: Vector3<f64>,
+    pub color: i32,
+    pub duration: i32,
+}
+impl Trail {
+    pub fn new(target: Vector3<f64>, color: i32, duration: i32) -> Self {
+        Self {
+            target,
+            color,
+            duration,
+        }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct PauseMobGrowth;
+#[derive(Clone, Copy, Debug)]
+pub struct ResetMobGrowth;
+#[derive(Clone, Copy, Debug)]
+pub struct ItemSlime;
+#[derive(Clone, Copy, Debug)]
+pub struct ItemCobweb;
+#[derive(Clone, Copy, Debug)]
+pub struct ItemSnowball;
+#[derive(Clone, Copy, Debug)]
+pub struct LargeSmoke;
+#[derive(Clone, Copy, Debug)]
+pub struct Lava;
+#[derive(Clone, Copy, Debug)]
+pub struct Mycelium;
+#[derive(Clone, Copy, Debug)]
+pub struct Note;
+#[derive(Clone, Copy, Debug)]
+pub struct Poof;
+#[derive(Clone, Copy, Debug)]
+pub struct Portal;
+#[derive(Clone, Copy, Debug)]
+pub struct Rain;
+#[derive(Clone, Copy, Debug)]
+pub struct Smoke;
+#[derive(Clone, Copy, Debug)]
+pub struct WhiteSmoke;
+#[derive(Clone, Copy, Debug)]
+pub struct Sneeze;
+#[derive(Clone, Copy, Debug)]
+pub struct Spit;
+#[derive(Clone, Copy, Debug)]
+pub struct SquidInk;
+#[derive(Clone, Copy, Debug)]
+pub struct SweepAttack;
+#[derive(Clone, Copy, Debug)]
+pub struct TotemOfUndying;
+#[derive(Clone, Copy, Debug)]
+pub struct Underwater;
+#[derive(Clone, Copy, Debug)]
+pub struct Splash;
+#[derive(Clone, Copy, Debug)]
+pub struct Witch;
+#[derive(Clone, Copy, Debug)]
+pub struct BubblePop;
+#[derive(Clone, Copy, Debug)]
+pub struct CurrentDown;
+#[derive(Clone, Copy, Debug)]
+pub struct BubbleColumnUp;
+#[derive(Clone, Copy, Debug)]
+pub struct Nautilus;
+#[derive(Clone, Copy, Debug)]
+pub struct Dolphin;
+#[derive(Clone, Copy, Debug)]
+pub struct CampfireCosySmoke;
+#[derive(Clone, Copy, Debug)]
+pub struct CampfireSignalSmoke;
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingHoney;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingHoney;
+#[derive(Clone, Copy, Debug)]
+pub struct LandingHoney;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingNectar;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingSporeBlossom;
+#[derive(Clone, Copy, Debug)]
+pub struct Ash;
+#[derive(Clone, Copy, Debug)]
+pub struct CrimsonSpore;
+#[derive(Clone, Copy, Debug)]
+pub struct WarpedSpore;
+#[derive(Clone, Copy, Debug)]
+pub struct SporeBlossomAir;
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingObsidianTear;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingObsidianTear;
+#[derive(Clone, Copy, Debug)]
+pub struct LandingObsidianTear;
+#[derive(Clone, Copy, Debug)]
+pub struct ReversePortal;
+#[derive(Clone, Copy, Debug)]
+pub struct WhiteAsh;
+#[derive(Clone, Copy, Debug)]
+pub struct SmallFlame;
+#[derive(Clone, Copy, Debug)]
+pub struct Snowflake;
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingDripstoneLava;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingDripstoneLava;
+#[derive(Clone, Copy, Debug)]
+pub struct DrippingDripstoneWater;
+#[derive(Clone, Copy, Debug)]
+pub struct FallingDripstoneWater;
+#[derive(Clone, Copy, Debug)]
+pub struct GlowSquidInk;
+#[derive(Clone, Copy, Debug)]
+pub struct Glow;
+#[derive(Clone, Copy, Debug)]
+pub struct WaxOn;
+#[derive(Clone, Copy, Debug)]
+pub struct WaxOff;
+#[derive(Clone, Copy, Debug)]
+pub struct ElectricSpark;
+#[derive(Clone, Copy, Debug)]
+pub struct Scrape;
+#[derive(Clone, Copy, Debug)]
+pub struct Shriek {
+    pub delay: i32,
+}
+impl Shriek {
+    pub fn new(delay: i32) -> Self {
+        Self { delay }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct EggCrack;
+#[derive(Clone, Copy, Debug)]
+pub struct DustPlume;
+#[derive(Clone, Copy, Debug)]
+pub struct TrialSpawnerDetection;
+#[derive(Clone, Copy, Debug)]
+pub struct TrialSpawnerDetectionOminous;
+#[derive(Clone, Copy, Debug)]
+pub struct VaultConnection;
+#[derive(Clone, Copy, Debug)]
+pub struct DustPillar {
+    pub state: i32,
+}
+impl DustPillar {
+    pub fn new(state: i32) -> Self {
+        Self { state }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct OminousSpawning;
+#[derive(Clone, Copy, Debug)]
+pub struct RaidOmen;
+#[derive(Clone, Copy, Debug)]
+pub struct TrialOmen;
+#[derive(Clone, Copy, Debug)]
+pub struct BlockCrumble {
+    pub state: i32,
+}
+impl BlockCrumble {
+    pub fn new(state: i32) -> Self {
+        Self { state }
+    }
+}
+#[derive(Clone, Copy, Debug)]
+pub struct Firefly;

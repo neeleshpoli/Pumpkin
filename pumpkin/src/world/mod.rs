@@ -65,12 +65,11 @@ use pumpkin_data::{
     entity::{EntityStatus, EntityType},
     fluid::Fluid,
     item_stack::ItemStack,
-    particle::Particle,
     sound::{Sound, SoundCategory},
     sound_id_remap::remap_sound_id_for_version,
     world::{RAW, WorldEvent},
 };
-use pumpkin_data::{BlockDirection, BlockState, translation};
+use pumpkin_data::{BlockDirection, BlockState, particle, translation};
 use pumpkin_inventory::crafting::recipe_provider::RecipeProvider;
 use pumpkin_inventory::screen_handler::InventoryPlayer;
 use pumpkin_nbt::{compound::NbtCompound, to_bytes_unnamed};
@@ -79,7 +78,7 @@ use pumpkin_protocol::bedrock::client::start_game::{CStartGame, ServerTelemetryD
 use pumpkin_protocol::bedrock::frame_set::FrameSet;
 use pumpkin_protocol::java::client::play::{
     CBlockUpdate, CChunkBatchEnd, CChunkBatchStart, CChunkData, CDisguisedChatMessage, CExplosion,
-    CRespawn, CSetBlockDestroyStage, CWorldEvent,
+    CRespawn, CSetBlockDestroyStage, CWorldEvent, SerializeParticleData,
 };
 use pumpkin_protocol::java::client::play::{
     CPlayerSpawnPosition, CRecipeBookAdd, CRecipeBookSettings, CSystemChatMessage,
@@ -752,16 +751,20 @@ impl World {
         Self::broadcast_java_grouped(packet, recipients_by_version);
     }
 
-    pub fn spawn_particle(
+    pub fn spawn_particle<P: SerializeParticleData + Copy>(
         &self,
         position: Vector3<f64>,
         offset: Vector3<f32>,
         max_speed: f32,
         particle_count: i32,
-        particle: Particle,
+        particle: P
     ) {
+        let id = VarInt(particle.id());
+        let mut data = [0u8; 512];
+        let size = particle.to_bytes(&mut data).unwrap();
+
         for player in self.players.load().iter() {
-            player.spawn_particle(position, offset, max_speed, particle_count, particle);
+            player.spawn_particle(position, offset, max_speed, particle_count, id, &data[..size]);
         }
     }
 
@@ -2947,9 +2950,9 @@ impl World {
         let explosion = Explosion::new(power, position);
         let block_count = explosion.explode(self).await;
         let particle = if power < 2.0 {
-            Particle::Explosion
+            particle::Explosion.id()
         } else {
-            Particle::ExplosionEmitter
+            particle::ExplosionEmitter.id()
         };
         for player in self.players.load().iter() {
             let mut sound_id = Sound::EntityGenericExplode as u16;

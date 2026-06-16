@@ -83,7 +83,7 @@ pub(crate) const fn to_wit_bounding_box(
 
 // --- Trapping Helpers ---
 impl PluginHostState {
-    fn get_world_res(&self, res: &Resource<World>) -> wasmtime::Result<&WorldResource> {
+    pub(super) fn get_world_res(&self, res: &Resource<World>) -> wasmtime::Result<&WorldResource> {
         self.resource_table
             .get::<WorldResource>(&Resource::new_own(res.rep()))
             .map_err(wasmtime::Error::from)
@@ -193,7 +193,6 @@ impl PluginHostState {
 }
 
 impl pumpkin::plugin::world::Host for PluginHostState {}
-impl pumpkin::plugin::particles::Host for PluginHostState {}
 impl pumpkin::plugin::sounds::Host for PluginHostState {}
 
 impl pumpkin::plugin::world::HostWorld for PluginHostState {
@@ -496,34 +495,6 @@ impl pumpkin::plugin::world::HostWorld for PluginHostState {
             &pumpkin_util::math::vector3::Vector3::new(pos.0, pos.1, pos.2),
             volume,
             pitch,
-        );
-        Ok(())
-    }
-
-    async fn spawn_particle(
-        &mut self,
-        world: Resource<World>,
-        particle: pumpkin::plugin::particles::Particle,
-        pos: pumpkin::plugin::common::Position,
-        offset: pumpkin::plugin::common::Position,
-        max_speed: f32,
-        count: i32,
-    ) -> wasmtime::Result<()> {
-        let world_ref = self.get_world_res(&world)?;
-        let particle_name = format!("{particle:?}").to_lowercase().replace('_', "-");
-        let particle_data = pumpkin_data::particle::Particle::from_name(&particle_name)
-            .ok_or_else(|| wasmtime::Error::msg(format!("Unknown particle: {particle_name}")))?;
-
-        world_ref.provider.spawn_particle(
-            pumpkin_util::math::vector3::Vector3::new(pos.0, pos.1, pos.2),
-            pumpkin_util::math::vector3::Vector3::new(
-                offset.0 as f32,
-                offset.1 as f32,
-                offset.2 as f32,
-            ),
-            max_speed,
-            count,
-            particle_data,
         );
         Ok(())
     }

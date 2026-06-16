@@ -5,7 +5,8 @@ use crate::{
     entity::{Entity, EntityBase, EntityBaseFuture, NBTStorage},
     server::Server,
 };
-use pumpkin_data::effect::StatusEffect;
+use pumpkin_data::{effect::StatusEffect, particle};
+use pumpkin_protocol::java::client::play::SerializeParticleData;
 use pumpkin_util::math::boundingbox::BoundingBox;
 use pumpkin_util::math::vector3::Vector3;
 
@@ -167,7 +168,7 @@ impl EntityBase for AreaEffectCloudEntity {
 
             let meta = ParticleMeta {
                 particle_id: pumpkin_protocol::codec::var_int::VarInt(
-                    pumpkin_data::particle::Particle::EntityEffect as i32,
+                    particle::EntityEffect::new(color).id(),
                 ),
                 data: &data_bytes,
             };
