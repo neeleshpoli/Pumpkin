@@ -2977,7 +2977,7 @@ impl World {
                     power,
                     block_count as i32,
                     None,
-                    VarInt(particle as i32),
+                    VarInt(particle),
                     sound.clone(),
                 ))
                 .await;

@@ -1,6 +1,8 @@
 /* This file is generated. Do not edit manually. */
+#[allow(clippy::wildcard_imports)]
 use crate::plugin::loader::wasm::wasm_host::state::*;
 use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::common::Position;
+#[allow(clippy::wildcard_imports)]
 use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::particles::*;
 use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::world::World;
 use wasmtime::component::Resource;

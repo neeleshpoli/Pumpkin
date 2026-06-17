@@ -275,8 +275,10 @@ pub fn build_wit_bindings() -> TokenStream {
 
     quote! {
         use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::common::Position;
+        #[allow(clippy::wildcard_imports)]
         use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::particles::*;
         use crate::plugin::loader::wasm::wasm_host::wit::v0_1::pumpkin::plugin::world::World;
+        #[allow(clippy::wildcard_imports)]
         use crate::plugin::loader::wasm::wasm_host::state::*;
         use wasmtime::component::Resource;
 

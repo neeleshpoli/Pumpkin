@@ -81,6 +81,7 @@ impl<'a> FindArg<'a> for ParticleArgumentConsumer {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 #[must_use]
 pub fn from_name(name: &str) -> Option<Arc<dyn SerializeParticleData>> {
     match name {
